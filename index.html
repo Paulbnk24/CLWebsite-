@@ -1,365 +1,505 @@
-from pathlib import Path
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b13">
-<meta name="description" content="An independent, visual guide to the UEFA Champions League: its history, format, tactics, economics and defining moments.">
-<title>Beyond the Stars — UEFA Champions League</title>
-<link rel="preconnect" href="https://images.unsplash.com">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#080b13;--panel:#101622;--panel2:#151d2b;--ink:#f4f4f1;--muted:#a1aabc;--gold:#e4c783;--blue:#8cb8ff;--line:#283243;--max:1220px;--ease:cubic-bezier(.2,.75,.25,1)}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E")}a{color:inherit}button,input{font:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:4px}::selection{background:var(--gold);color:#111}.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}.mono,.eyebrow,.kicker,.small-label{font-family:"DM Mono",monospace;text-transform:uppercase;letter-spacing:.12em}.eyebrow{font-size:11px;color:var(--gold)}.muted{color:var(--muted)}.top{position:sticky;top:0;z-index:30;background:rgba(8,11,19,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.09)}nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:25px}.brand{display:flex;gap:11px;align-items:center;text-decoration:none;white-space:nowrap}.brand-icon{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;font-size:10px;color:var(--gold);font-weight:800;letter-spacing:-.06em}.brand b{display:block;font-size:11px;letter-spacing:.13em}.brand small{display:block;font:10px "DM Mono",monospace;color:var(--muted);letter-spacing:.08em}.navlinks{display:flex;gap:5px;align-items:center}.navlinks a{padding:9px 10px;text-decoration:none;font-size:11px;color:var(--muted);transition:color .2s}.navlinks a:hover,.navlinks a.active{color:var(--gold)}.menu{display:none;background:none;border:1px solid var(--line);color:var(--ink);padding:8px 11px;border-radius:5px}
-.hero{position:relative;min-height:650px;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--line);isolation:isolate}.hero:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,#080b13 0%,rgba(8,11,19,.92) 34%,rgba(8,11,19,.48) 72%,rgba(8,11,19,.2)),linear-gradient(0deg,var(--bg),transparent 28%),url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=2200&q=88") center 45%/cover;transform:scale(1.035);animation:heroReveal 1.5s var(--ease) both}.hero:after{content:"";position:absolute;right:-9%;top:9%;width:48vw;height:48vw;border:1px solid rgba(228,199,131,.2);border-radius:50%;box-shadow:0 0 0 55px rgba(228,199,131,.025),0 0 0 110px rgba(228,199,131,.02);z-index:-1}.hero-inner{padding:110px 0 100px;max-width:790px}.hero .eyebrow{display:flex;gap:12px;align-items:center}.hero .eyebrow:before{content:"";width:35px;height:1px;background:var(--gold)}h1{font-size:clamp(52px,8.1vw,108px);line-height:.98;letter-spacing:-.085em;margin:25px 0 24px;font-weight:800;max-width:800px}h1 em{font-style:normal;color:var(--gold)}.hero p{font-size:clamp(15px,1.6vw,18px);color:#c2c9d5;max-width:590px;line-height:1.85}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:31px}.btn{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:12px 17px;border:1px solid var(--line);border-radius:4px;text-decoration:none;font-size:12px;font-weight:700;transition:transform .25s var(--ease),background .25s,border .25s}.btn:hover{transform:translateY(-3px)}.btn.gold{background:var(--gold);border-color:var(--gold);color:#11151d}.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}.hero-caption{position:absolute;bottom:22px;right:max(24px,calc((100vw - var(--max))/2));font:10px "DM Mono",monospace;color:#b6bdc9;letter-spacing:.08em}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}.metric{padding:27px 22px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric .num{display:block;color:var(--gold);font-size:clamp(31px,4vw,48px);font-weight:800;line-height:1.2;letter-spacing:-.07em}.metric .label{display:block;color:var(--muted);font-size:11px;margin-top:8px;line-height:1.5}.metric .asof{display:block;color:#657185;font:9px "DM Mono",monospace;margin-top:7px}
-section{padding:100px 0;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:1fr minmax(250px,420px);gap:30px;align-items:end;margin-bottom:42px}.section-head h2{font-size:clamp(34px,5vw,58px);letter-spacing:-.065em;line-height:1.08;margin:12px 0 0}.section-head>p{color:var(--muted);font-size:13px;margin:0}.chapter{font:10px "DM Mono",monospace;color:#657185;letter-spacing:.12em;margin-bottom:12px}.gold{color:var(--gold)}.intro-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}.feature-photo{min-height:390px;border-radius:7px;position:relative;overflow:hidden;background:#141b27}.feature-photo img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;transition:transform .8s var(--ease);filter:saturate(.72)}.feature-photo:hover img{transform:scale(1.045)}.photo-caption{position:absolute;bottom:0;left:0;right:0;padding:45px 25px 22px;background:linear-gradient(transparent,rgba(4,7,13,.9));font:10px "DM Mono",monospace;color:#e3e7ee}.editorial{background:var(--panel);padding:clamp(25px,4vw,45px);border:1px solid var(--line);border-radius:7px}.editorial h3{font-size:27px;letter-spacing:-.04em;line-height:1.2;margin:13px 0}.editorial p{font-size:13px;color:var(--muted)}.rule{height:1px;background:var(--line);margin:25px 0}.quote{font-size:19px;line-height:1.55;letter-spacing:-.025em;color:#e8e4d9}.quote span{color:var(--gold)}
-/* Timeline */
-.timeline{position:relative}.timeline:before{content:"";position:absolute;top:10px;bottom:10px;left:123px;width:1px;background:var(--line)}.event{display:grid;grid-template-columns:105px 38px minmax(0,1fr);gap:0;position:relative}.event-year{padding-top:28px;font:11px "DM Mono",monospace;color:var(--gold)}.event-marker{position:relative;display:flex;justify-content:center}.event-marker:before{content:"";width:8px;height:8px;margin-top:32px;border:2px solid var(--gold);background:var(--bg);border-radius:50%;z-index:1;transition:transform .3s,background .3s}.event:hover .event-marker:before{transform:scale(1.5);background:var(--gold)}.event-body{padding:22px 0 29px;border-bottom:1px solid var(--line)}.event-body h3{font-size:21px;margin:0 0 8px;letter-spacing:-.035em}.event-body p{max-width:760px;font-size:13px;color:var(--muted);margin:0}.event-tag{display:inline-block;margin-top:12px;color:var(--gold);font:9px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
-.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.three-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{background:var(--panel);border:1px solid var(--line);padding:26px;border-radius:7px;transition:transform .35s var(--ease),border-color .35s}.card:hover{transform:translateY(-4px);border-color:#4a5363}.card .index{font:10px "DM Mono",monospace;color:var(--gold);letter-spacing:.14em}.card h3{font-size:20px;letter-spacing:-.04em;line-height:1.3;margin:17px 0 10px}.card p,.card li{font-size:12px;color:var(--muted)}.card ul{padding-left:17px}.card li{margin:8px 0}.card-image{height:210px;position:relative;margin:-26px -26px 24px;overflow:hidden;background:#182132}.card-image img{width:100%;height:100%;object-fit:cover;filter:saturate(.7);transition:transform .7s var(--ease)}.card:hover .card-image img{transform:scale(1.04)}
-/* Format */
-.format-board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.format-stage{padding:22px 18px;background:var(--panel);border-top:2px solid var(--gold);min-height:178px}.format-stage .n{font:10px "DM Mono",monospace;color:var(--gold)}.format-stage h3{font-size:16px;line-height:1.3;margin:15px 0 8px}.format-stage p{font-size:11px;color:var(--muted);margin:0}.format-lower{display:grid;grid-template-columns:.85fr 1.15fr;gap:18px;margin-top:18px}.note{padding:24px;background:var(--panel2);border:1px solid var(--line);border-radius:7px}.note h3{font-size:17px;margin:0 0 8px}.note p{font-size:12px;color:var(--muted);margin:0}.comparison{width:100%;border-collapse:collapse;font-size:12px}.comparison th{text-align:left;color:var(--gold);font:10px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.1em}.comparison th,.comparison td{padding:13px 10px;border-bottom:1px solid var(--line)}.comparison td{color:var(--muted)}.comparison td:first-child{color:var(--ink)}
-/* Tactics pitch */
-.pitch-wrap{display:grid;grid-template-columns:1fr .85fr;gap:25px;align-items:center}.pitch{position:relative;min-height:390px;overflow:hidden;border:1px solid rgba(255,255,255,.28);border-radius:5px;background:repeating-linear-gradient(90deg,#183b35 0,#183b35 10%,#1c453b 10%,#1c453b 20%)}.pitch:before{content:"";position:absolute;inset:12px;border:1px solid rgba(240,248,242,.5)}.pitch:after{content:"";position:absolute;top:12px;bottom:12px;left:50%;width:1px;background:rgba(240,248,242,.5)}.centre-circle{position:absolute;left:50%;top:50%;width:100px;height:100px;border:1px solid rgba(240,248,242,.5);border-radius:50%;transform:translate(-50%,-50%)}.box-left,.box-right{position:absolute;top:30%;height:40%;width:17%;border:1px solid rgba(240,248,242,.5)}.box-left{left:12px;border-left:0}.box-right{right:12px;border-right:0}.player{position:absolute;z-index:2;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;font:9px "DM Mono",monospace;font-weight:bold;color:#091019;background:var(--gold);box-shadow:0 0 0 5px rgba(228,199,131,.13);transition:transform .5s var(--ease)}.player.blue{background:var(--blue);box-shadow:0 0 0 5px rgba(140,184,255,.12)}.player.p1{left:16%;top:24%}.player.p2{left:28%;top:40%}.player.p3{left:40%;top:25%}.player.p4{left:38%;top:62%}.player.p5{left:48%;top:47%}.player.p6{left:59%;top:28%}.player.p7{left:67%;top:45%}.player.p8{left:76%;top:62%}.player.p9{left:83%;top:34%}.player.p10{left:58%;top:70%}.player.p11{left:22%;top:72%}.pitch-lines{position:absolute;inset:0;z-index:1;pointer-events:none}.pitch-lines svg{width:100%;height:100%}.pitch-lines path{stroke:var(--gold);stroke-width:1.5;stroke-dasharray:5 5;fill:none;opacity:.85;animation:dash 12s linear infinite}.pitch-label{position:absolute;bottom:20px;left:20px;font:9px "DM Mono",monospace;letter-spacing:.1em;color:#e7eee9;z-index:3}.tactic-copy h3{font-size:25px;line-height:1.2;letter-spacing:-.04em;margin:12px 0}.tactic-copy p{font-size:13px;color:var(--muted)}.switches{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.switch{cursor:pointer;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:9px 12px;font-size:11px;transition:.2s}.switch:hover,.switch.selected{color:var(--bg);background:var(--gold);border-color:var(--gold)}.pitch[data-mode="press"] .player{transform:translate(5px,-9px)}.pitch[data-mode="counter"] .player.p5{transform:translate(-17px,14px)}.pitch[data-mode="counter"] .player.p6{transform:translate(-18px,10px)}.pitch[data-mode="counter"] .player.p7{transform:translate(-25px,8px)}.tactic-disclaimer{font-size:10px!important;color:#768398!important}
-/* Economics */
-.economics{display:grid;grid-template-columns:1fr 1fr;gap:18px}.economy-list{margin-top:18px}.economy-row{display:grid;grid-template-columns:115px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}.economy-row strong{font-size:12px}.economy-row span{font-size:11px;color:var(--muted)}.debate{padding:30px;background:linear-gradient(140deg,#172238,#101622 70%);border:1px solid var(--line);border-radius:7px}.debate h3{font-size:24px;letter-spacing:-.04em;line-height:1.2;margin:12px 0}.debate p{font-size:13px;color:var(--muted)}.scale{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.scale div{padding:16px;background:rgba(0,0,0,.16);border:1px solid var(--line)}.scale b{display:block;font-size:12px}.scale span{display:block;font-size:11px;color:var(--muted);margin-top:5px}
-/* Match explorer */
-.match-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.match-tab{border:1px solid var(--line);color:var(--muted);background:none;padding:9px 12px;border-radius:4px;cursor:pointer;font-size:11px}.match-tab.active,.match-tab:hover{background:var(--gold);border-color:var(--gold);color:#111}.match-feature{display:grid;grid-template-columns:1fr 1fr;background:var(--panel);border:1px solid var(--line);border-radius:7px;overflow:hidden}.match-photo{min-height:340px;background-size:cover;background-position:center;position:relative}.match-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(16,22,34,.55))}.match-copy{padding:clamp(25px,4vw,45px);align-self:center}.match-copy .score{font-size:clamp(38px,5vw,62px);font-weight:800;letter-spacing:-.08em;color:var(--gold);line-height:1.1}.match-copy h3{font-size:22px;line-height:1.25;letter-spacing:-.04em;margin:14px 0 10px}.match-copy p{font-size:12px;color:var(--muted)}
-/* records and sources */
-.records-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.record{display:grid;grid-template-columns:35px 1fr auto;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}.record:last-child{border-bottom:0}.rank{font:10px "DM Mono",monospace;color:var(--gold)}.record b{font-size:12px}.record small{display:block;font-size:10px;color:var(--muted)}.record strong{font-size:18px;color:var(--gold)}.disclaimer{font-size:10px;color:#7e899b;margin-top:15px}.source-list{list-style:none;padding:0;margin:0;counter-reset:s}.source-list li{counter-increment:s;position:relative;padding:16px 0 16px 42px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}.source-list li:before{content:"[" counter(s) "]";position:absolute;left:0;color:var(--gold);font:11px "DM Mono",monospace}.source-list a{text-decoration-color:#4a5669;text-underline-offset:4px}.source-list a:hover{color:var(--gold)}.conclusion{padding:clamp(28px,5vw,58px);background:var(--panel);border:1px solid var(--line);border-radius:7px}.conclusion h2{font-size:clamp(32px,5vw,56px);letter-spacing:-.065em;line-height:1.08;margin:15px 0}.conclusion p{max-width:800px;color:var(--muted);font-size:14px}.footer{padding:28px 0 42px}.footer-inner{display:flex;justify-content:space-between;gap:25px}.footer p{font-size:10px;color:var(--muted);max-width:720px;margin:0}.backtop{text-decoration:none;color:var(--gold);font-size:11px;white-space:nowrap}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .75s var(--ease),transform .75s var(--ease)}.reveal.visible{opacity:1;transform:none}.progress{position:fixed;z-index:60;left:0;top:0;height:2px;background:var(--gold);width:0;pointer-events:none}
-@keyframes heroReveal{from{opacity:.45;transform:scale(1.08)}to{opacity:1;transform:scale(1.035)}}@keyframes dash{to{stroke-dashoffset:-100}}
-@media(max-width:900px){.navlinks{display:none;position:absolute;left:0;right:0;top:74px;background:rgba(8,11,19,.98);padding:12px 24px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}.navlinks.open{display:flex}.menu{display:block}.hero{min-height:590px}.section-head{grid-template-columns:1fr;gap:14px}.intro-grid,.pitch-wrap,.economics{grid-template-columns:1fr}.feature-photo{min-height:320px}.format-lower{grid-template-columns:1fr}.pitch{min-height:360px}.tactic-copy{max-width:700px}.three-col{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.wrap{width:calc(100% - 32px)}nav{height:68px}.navlinks{top:68px;padding-inline:16px}.brand b{font-size:10px}.brand small{font-size:9px}.hero{min-height:590px}.hero:before{background:linear-gradient(90deg,rgba(8,11,19,.94),rgba(8,11,19,.58)),linear-gradient(0deg,var(--bg),transparent 40%),url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1100&q=80") center/cover}.hero-inner{padding:80px 0}.hero-caption{font-size:8px}.metrics{grid-template-columns:repeat(2,1fr)}.metric{padding:20px 14px;border-bottom:1px solid var(--line)}.metric:nth-child(2){border-right:0}.metric:nth-child(n+3){border-bottom:0}.metric .label{font-size:10px}section{padding:70px 0}.two-col,.three-col,.format-lower,.records-grid,.match-feature{grid-template-columns:1fr}.format-board{grid-template-columns:repeat(2,minmax(0,1fr))}.format-stage{padding:16px;min-height:165px}.event{grid-template-columns:72px 25px minmax(0,1fr)}.timeline:before{left:83px}.event-year{font-size:9px}.event-body h3{font-size:17px}.event-body p{font-size:12px}.card{padding:21px}.card-image{margin:-21px -21px 22px}.pitch{min-height:310px}.centre-circle{width:70px;height:70px}.player{width:24px;height:24px;font-size:8px}.match-photo{min-height:240px}.match-photo:after{background:linear-gradient(0deg,rgba(16,22,34,.5),transparent)}.match-copy{padding:25px}.footer-inner{flex-direction:column}.economy-row{grid-template-columns:95px 1fr}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The UEFA Champions League – Academic Research Project</title>
+    <style>
+        :root {
+            --bg-deep: #050811;
+            --bg-card: #0d1424;
+            --accent-gold: #d4af37;
+            --accent-blue: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        /* Navigation Header */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(5, 8, 17, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav button, nav a.external-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        nav button:hover, nav button.active {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        nav a.external-btn {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        nav a.external-btn:hover {
+            background: rgba(2, 132, 199, 0.1);
+        }
+
+        /* Hero Section */
+        header {
+            text-align: center;
+            padding: 90px 20px 60px 20px;
+            background: linear-gradient(180deg, rgba(5,8,17,0) 0%, rgba(13,20,36,0.9) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        h1 span {
+            color: var(--accent-gold);
+        }
+
+        .hero-desc {
+            max-width: 800px;
+            margin: 20px auto 0 auto;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+        }
+
+        /* Audio Player Bar */
+        .audio-player-container {
+            max-width: 550px;
+            margin: 35px auto 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .audio-info span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .audio-info strong {
+            font-size: 0.95rem;
+        }
+
+        audio {
+            height: 35px;
+            outline: none;
+        }
+
+        /* Main Container & Views */
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 15px;
+        }
+
+        .section-intro {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+        }
+
+        /* Deep Content Blocks / Articles */
+        .content-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .content-block h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .content-block p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .content-block ul {
+            color: var(--text-muted);
+            margin: 0;
+            padding-left: 20px;
+            font-size: 1.05rem;
+        }
+
+        .content-block li {
+            margin-bottom: 10px;
+        }
+
+        .content-img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Grids for Subpages */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
+        /* Timeline Specific Layout */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 45px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 35px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            border: 3px solid var(--bg-deep);
+        }
+
+        .timeline-year {
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+    </style>
 </head>
 <body>
-<div class="progress" id="progress"></div>
-<div class="top">
-  <nav class="wrap" aria-label="Main navigation">
-    <a class="brand" href="#top"><span class="brand-icon">UCL</span><span><b>BEYOND THE STARS</b><small>Inside European football</small></span></a>
-    <button class="menu" id="menu" aria-expanded="false" aria-controls="navlinks">Menu ☰</button>
-    <div class="navlinks" id="navlinks">
-      <a href="#story">The story</a><a href="#format">The format</a><a href="#tactics">Tactics lab</a><a href="#money">The business</a><a href="#moments">Iconic nights</a><a href="#records">Records</a><a href="#sources">Sources</a>
+
+    <!-- Professional Navigation -->
+    <nav>
+        <div class="nav-brand">UCL Academic Research</div>
+        <div class="nav-links">
+            <button class="active" onclick="switchView('home', this)">1. Genesis & History</button>
+            <button onclick="switchView('economics', this)">2. Economics & Media</button>
+            <button onclick="switchView('tactics', this)">3. Tactical Evolution</button>
+            <button onclick="switchView('dynasty', this)">4. Dynasties & Records</button>
+            <a class="external-btn" href="https://www.uefa.com/uefachampionsleague/" target="_blank">UEFA.com ↗</a>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header>
+        <p class="subtitle">Academic Research Webpage // Faculty of Business & Social Sciences</p>
+        <h1>The UEFA Champions <span>League</span></h1>
+        <p class="hero-desc">An in-depth academic examination of Europe's premier club football ecosystem—analyzing institutional transformation, media economics, and tactical globalization.</p>
+        
+        <!-- Official Anthem Audio Player -->
+        <div class="audio-player-container">
+            <div class="audio-info">
+                <span>Matchday Audio Experience</span>
+                <strong>The Champions Anthem</strong>
+            </div>
+            <audio controls preload="none">
+                <source src="https://upload.wikimedia.org/wikipedia/commons/b/b3/UEFA_Champions_League_Anthem_%28Chorus%29.ogg" type="audio/ogg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- VIEW 1: HISTORY & GENESIS (TIMELINE) -->
+        <div id="home" class="view-section active">
+            <h2 class="section-title">Historical Genesis & Institutionalization</h2>
+            <p class="section-intro">A deep chronological inquiry into how a post-war journalistic initiative transformed into the globe's most prestigious annual club sporting event.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1955 – Post-War Vision & Inception</div>
+                    <h3>The Birth of the European Champion Clubs' Cup</h3>
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80" alt="Historical Stadium Atmosphere" class="content-img">
+                    <p>Conceived by French sports journalist Gabriel Hanot and supported by Jacques Goddet of <em>L'Équipe</em>, the tournament emerged from a desire to determine the undisputed champion club of Europe. At a time when international air travel was in its infancy and domestic leagues operated entirely in isolation, Hanot championed a cross-border format.</p>
+                    <p><strong>Structural Paradigm:</strong> Initially operated purely on a two-legged knockout basis. Participation was strictly reserved for domestic league champions, creating an exclusive, elite barrier that intensified national rivalries and laid the foundation for pan-European sporting integration.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">1992 – The Commercial Watershed</div>
+                    <h3>Transition to the "Champions League" & Group Stage</h3>
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Floodlit Stadium" class="content-img">
+                    <p>Faced with mounting pressure from elite clubs threatening breakaway super-leagues and the rapid commercialization of television broadcasting, UEFA executed a structural revolution in 1992. The old knockout European Cup was rebranded into the UEFA Champions League, introducing the group stage.</p>
+                    <p><strong>Cultural Impact:</strong> Alongside the new format came the iconic anthem, arranged by Tony Britten using motifs from George Frideric Handel's coronation anthem <em>Zadok the Priest</em>—establishing an unmatched psychological ritual prior to kickoff.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2005 – The Paradigm of Drama</div>
+                    <h3>The "Miracle of Istanbul"</h3>
+                    <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80" alt="Dramatic Night Match" class="content-img">
+                    <p>The 2005 final between AC Milan and Liverpool FC remains a focal point for sports psychology and narrative analysis. Milan's dominant 3-0 first-half lead dissolved within six frantic minutes in the second half, leading to a Liverpool victory on penalties.</p>
+                    <p><strong>Academic Relevance:</strong> The match cemented the Champions League's reputation as a theater of improbable comebacks, driving global media engagement and cementing football's status as high-stakes narrative drama.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: ECONOMICS & MEDIA -->
+        <div id="economics" class="view-section">
+            <h2 class="section-title">Economics, Governance & Media Architecture</h2>
+            <p class="section-intro">An institutional analysis of financial distribution models, centralized broadcasting rights, and the paradigm shift toward the modern "Swiss-Model" league phase.</p>
+            
+            <div class="content-block">
+                <img src="https://images.unsplash.com/photo-1556056504-5c7696c4c28d?auto=format&fit=crop&w=1200&q=80" alt="Trophy Presentation" class="content-img">
+                <h3>Centralized Commercialization & Revenue Distribution</h3>
+                <p>The financial scale of the UEFA Champions League dwarfs all other continental competitions. Through centralized marketing of television rights, global sponsorships, and corporate partnerships, UEFA generates billions of euros annually.</p>
+                <p><strong>The Distribution Mechanism:</strong> Revenue is funneled back to participating clubs via a sophisticated coefficient system designed to balance competitive incentives:</p>
+                <ul>
+                    <li><strong>Start Fees & Performance Bonuses:</strong> Direct financial injections for qualification, matches won, and progression through knockout rounds.</li>
+                    <li><strong>Coefficient Ranking:</strong> Historical performance bonuses rewarding clubs with long-standing continental success over a 10-year period.</li>
+                    <li><strong>Market Pool:</strong> Payouts proportional to the proportional value of the television broadcast market in each participating club's home country.</li>
+                </ul>
+            </div>
+
+            <div class="content-block">
+                <h3>The 2024+ Swiss-Model Reform</h3>
+                <p>To mitigate the structural threat of private breakaway leagues and satisfy top-tier stakeholders demanding high-intensity fixtures, UEFA replaced traditional groups of four with a single 36-team league table.</p>
+                <p><strong>Strategic Outcome:</strong> Increased frequency of matches between elite European powerhouses early in the tournament cycle, maximizing broadcast value and ensuring higher engagement across global digital streaming channels.</p>
+            </div>
+        </div>
+
+        <!-- VIEW 3: TACTICAL EVOLUTION -->
+        <div id="tactics" class="view-section">
+            <h2 class="section-title">Tactical Evolution & Modern Play</h2>
+            <p class="section-intro">How tactical paradigms shifted from rigid defensive blocks to high-intensity gegenpressing, positional play, and data-driven athletic profiling.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="Tactical Action" class="card-img">
+                    <div class="card-body">
+                        <div>
+                            <h3>Positional Play (Juego de Posición)</h3>
+                            <p>Popularized and refined by tactical masterminds like Pep Guardiola, modern Champions League football heavily relies on spatial dominance, numerical superiority in central midfield zones, and micro-rotations to dismantle low defensive blocks.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=800&q=80" alt="Intense Pressing" class="card-img">
+                    <div class="card-body">
+                        <div>
+                            <h3>High Pressing & Transition Dynamics</h3>
+                            <p>The evolution from cautious European away-leg conservatism to aggressive high pressing (Gegenpressing) transformed matches into high-speed physical chess matches where defensive transitions occur within seconds of losing possession.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: DYNASTIES & RECORDS -->
+        <div id="dynasty" class="view-section">
+            <h2 class="section-title">Dynasties, Records & Legends</h2>
+            <p class="section-intro">An examination of historical dominance, individual milestones, and the psychological edge required to conquer Europe.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80" alt="Stadium Celebration" class="card-img">
+                    <div class="card-body">
+                        <div>
+                            <h3>Real Madrid's Hegemony</h3>
+                            <p>With over 14 titles, Real Madrid stands as the undisputed benchmark of continental success. Their historic "Three-Peat" (2016–2018) under Zinedine Zidane proved that psychological resilience and institutional culture can outperform cyclical tactical shifts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&w=800&q=80" alt="Player Focus" class="card-img">
+                    <div class="card-body">
+                        <div>
+                            <h3>Statistical Milestones</h3>
+                            <p>Legends like Cristiano Ronaldo (all-time top scorer with 140+ goals) and Lionel Messi redefined individual athletic achievement in Europe, setting goalscoring and assist records that serve as longitudinal datasets for sports analysts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </nav>
-</div>
 
-<header class="hero" id="top">
-  <div class="wrap hero-inner">
-    <div class="eyebrow">An independent football research experience</div>
-    <h1>One game.<br><em>A thousand stories.</em></h1>
-    <p>Explore the competition that turned European club football into a global stage — through its history, tactical ideas, economic power and unforgettable nights.</p>
-    <div class="hero-actions"><a class="btn gold" href="#story">Enter the story <span>↘</span></a><a class="btn ghost" href="#format">Understand the new format <span>↗</span></a></div>
-  </div>
-  <div class="hero-caption">01 — EUROPE AFTER DARK / VISUAL INTRODUCTION</div>
-</header>
+    <footer>
+        <p>&copy; 2026 UEFA CL Academic Research Project. Department of Sports Economics & History.</p>
+    </footer>
 
-<div class="wrap metrics" aria-label="Competition facts">
-  <div class="metric"><span class="num" data-count="1955">1955</span><span class="label">The first European Cup season</span><span class="asof">THE ORIGIN</span></div>
-  <div class="metric"><span class="num" data-count="36">36</span><span class="label">Clubs in today's league phase</span><span class="asof">FORMAT SINCE 2024/25</span></div>
-  <div class="metric"><span class="num" data-count="8">8</span><span class="label">League-phase opponents per club</span><span class="asof">FOUR HOME · FOUR AWAY</span></div>
-  <div class="metric"><span class="num" data-count="15">15</span><span class="label">European Cup / Champions League titles — Real Madrid</span><span class="asof">THROUGH 2024</span></div>
-</div>
+    <script>
+        function switchView(viewId, buttonElement) {
+            // Hide all views
+            const views = document.querySelectorAll('.view-section');
+            views.forEach(v => v.classList.remove('active'));
 
-<main class="wrap">
-<section id="story">
-  <div class="section-head reveal"><div><div class="chapter">01 / THE BIG PICTURE</div><div class="eyebrow">More than a tournament</div><h2>Football's biggest club stage is a system.</h2></div><p>The Champions League is simultaneously a sporting contest, a cultural ritual and a high-value media property. Each lens explains a different part of its power.</p></div>
-  <div class="intro-grid reveal">
-    <div class="feature-photo"><img loading="lazy" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=85" alt="Floodlit football stadium with the pitch at the centre"><div class="photo-caption">THE STADIUM AS A GLOBAL STAGE · IMAGE: UNSPLASH</div></div>
-    <article class="editorial"><div class="eyebrow">The central question</div><h3>How did a knockout cup become a global football institution?</h3><p>Its development cannot be explained by football alone. Changes to qualification and match formats shaped who could participate; television and sponsorship altered the value of each match; tactical innovation changed how teams compete; and memorable finals gave the tournament a shared mythology.</p><div class="rule"></div><div class="quote">“The competition's identity lives in the tension between <span>sporting uncertainty</span> and <span>commercial scale.</span>”</div><p>This project examines that tension rather than treating success as a list of trophies.</p></article>
-  </div>
-  <div class="three-col" style="margin-top:16px">
-    <article class="card reveal"><span class="index">LENS 01 / SPORT</span><h3>Merit, pressure, uncertainty</h3><p>Qualification is earned through domestic performance and UEFA's access rules. In knockout ties, a small number of decisive moments can outweigh long stretches of control.</p></article>
-    <article class="card reveal"><span class="index">LENS 02 / CULTURE</span><h3>Local clubs, global audiences</h3><p>Supporters carry local identities into an international spectacle. Stadium rituals, the anthem and historic rivalries make the competition recognisable across borders.</p></article>
-    <article class="card reveal"><span class="index">LENS 03 / INDUSTRY</span><h3>Attention has economic value</h3><p>Broadcast rights, sponsorship, ticketing and commercial partnerships turn elite matches into valuable media events — while raising questions about who benefits most.</p></article>
-  </div>
-</section>
+            // Remove active style from all navigation buttons
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(b => b.classList.remove('active'));
 
-<section id="history">
-  <div class="section-head reveal"><div><div class="chapter">02 / A TIMELINE</div><div class="eyebrow">From the European Cup to the present</div><h2>Seven decades of reinvention.</h2></div><p>Move through the turning points. The timeline connects sporting milestones with changes in the competition's structure and public identity.</p></div>
-  <div class="timeline">
-    <article class="event reveal"><div class="event-year">1955–60</div><div class="event-marker"></div><div class="event-body"><h3>A European idea becomes a competition</h3><p>The European Champion Clubs' Cup began in 1955/56, following proposals associated with French sports journalist Gabriel Hanot and the newspaper <em>L'Équipe</em>. Real Madrid won the first five editions. The original tournament was a knockout contest for national champions, giving the new competition a direct and simple premise: prove who could prevail across borders.</p><span class="event-tag">01 / The founding era</span></div></article>
-    <article class="event reveal"><div class="event-year">1960s–80s</div><div class="event-marker"></div><div class="event-body"><h3>Different football cultures leave their mark</h3><p>Benfica, Ajax, Bayern Munich, Liverpool and AC Milan became defining European powers. Their successes reflected more than individual talent: coaching, recruitment, club development and distinct tactical cultures shaped how teams approached the continental game.</p><span class="event-tag">02 / Rivalries and football identities</span></div></article>
-    <article class="event reveal"><div class="event-year">1991–93</div><div class="event-marker"></div><div class="event-body"><h3>A new name, a new media identity</h3><p>A group stage was introduced in the early 1990s, and the Champions League brand launched in 1992/93. The anthem, visual identity and centralised presentation made the tournament easier to recognise as a premium international event. This was not simply a new logo: it was a change in how European club football was packaged and sold.</p><span class="event-tag">03 / The brand era</span></div></article>
-    <article class="event reveal"><div class="event-year">1990s–2000s</div><div class="event-marker"></div><div class="event-body"><h3>Expansion changes the meaning of “champion”</h3><p>Access expanded beyond domestic title-winners, allowing multiple clubs from leading leagues to compete. This increased the number of high-profile fixtures and commercial opportunities, but also prompted debate: does a competition for Europe's best clubs still represent national champions equally, or does it increasingly reflect the power of the largest leagues?</p><span class="event-tag">04 / Access and commercial growth</span></div></article>
-    <article class="event reveal"><div class="event-year">2005</div><div class="event-marker"></div><div class="event-body"><h3>Istanbul: a final defined by momentum</h3><p>AC Milan led Liverpool 3–0 at half-time. Liverpool scored three times in the second half, the match finished 3–3 after extra time, and Liverpool won the shootout 3–2. The final became a case study in how momentum, belief, tactical adjustment and the high variance of a single match can combine.</p><span class="event-tag">05 / Liverpool 3–3 AC Milan · Liverpool won 3–2 on penalties</span></div></article>
-    <article class="event reveal"><div class="event-year">2016–18</div><div class="event-marker"></div><div class="event-body"><h3>Real Madrid's modern three-peat</h3><p>Under Zinedine Zidane, Real Madrid won three consecutive Champions League titles. Sustaining success in a knockout competition is unusual: opponents, injuries and single-match incidents can end a campaign. Madrid's run became a defining achievement of the modern era.</p><span class="event-tag">06 / Three consecutive titles</span></div></article>
-    <article class="event reveal"><div class="event-year">2019–24</div><div class="event-marker"></div><div class="event-body"><h3>Pressing, positional play and data</h3><p>Elite teams increasingly combined coordinated pressing, structured build-up, positional rotations and detailed video and performance analysis. Liverpool's 2019 title, Manchester City's first title in 2023 and Real Madrid's 2022 and 2024 victories illustrate that there is no single tactical route to winning: control, transitions, adaptation and execution can all matter.</p><span class="event-tag">07 / Tactical convergence and variation</span></div></article>
-    <article class="event reveal"><div class="event-year">2024/25 →</div><div class="event-marker"></div><div class="event-body"><h3>The league phase replaces the group stage</h3><p>The competition expanded from 32 to 36 clubs and replaced eight groups of four with one common league table. Each club plays eight different opponents. The reform changed qualification incentives and the distribution of meaningful fixtures across the opening phase.</p><span class="event-tag">08 / The current format</span></div></article>
-  </div>
-</section>
+            // Show selected view and activate button
+            document.getElementById(viewId).classList.add('active');
+            buttonElement.classList.add('active');
+        }
+    </script>
 
-<section id="format">
-  <div class="section-head reveal"><div><div class="chapter">03 / THE COMPETITION ENGINE</div><div class="eyebrow">Rules shape the drama</div><h2>One league. Many paths to the final.</h2></div><p>The current structure links a broad league phase to a seeded knockout route. Finishing position affects both whether a club progresses and how demanding its route may become.</p></div>
-  <div class="format-board reveal">
-    <article class="format-stage"><div class="n">STAGE 01</div><h3>Qualification</h3><p>Entry is determined by domestic results, association allocations and UEFA's access list. Some clubs must pass qualifying rounds.</p></article>
-    <article class="format-stage"><div class="n">STAGE 02</div><h3>League phase</h3><p>36 clubs share one table. Each plays eight different opponents: four at home and four away. A win earns three points.</p></article>
-    <article class="format-stage"><div class="n">STAGE 03</div><h3>Play-offs & last 16</h3><p>Places 1–8 advance directly. Places 9–24 enter two-legged play-offs. Clubs from 25th down are eliminated from Europe.</p></article>
-    <article class="format-stage"><div class="n">STAGE 04</div><h3>Knockout & final</h3><p>From the last 16, two-legged ties lead to the semi-finals. The final is one match at a neutral venue.</p></article>
-  </div>
-  <div class="format-lower reveal">
-    <article class="note"><div class="eyebrow">Why it matters</div><h3>Every point has a second-order effect.</h3><p>A win changes a club's points total, but also its likely final position, direct qualification prospects and potential knockout route. The table creates multiple overlapping races rather than eight isolated mini-leagues.</p></article>
-    <article class="note"><h3>Then vs now</h3><table class="comparison"><thead><tr><th>Feature</th><th>Traditional groups</th><th>League phase</th></tr></thead><tbody><tr><td>Participants</td><td>32</td><td>36</td></tr><tr><td>Opening structure</td><td>8 groups of 4</td><td>One league table</td></tr><tr><td>Matches per club</td><td>6</td><td>8</td></tr><tr><td>Opponents</td><td>3, home & away</td><td>8 different clubs</td></tr><tr><td>Progression</td><td>Top 2 per group</td><td>Top 8 direct; 9–24 play-offs</td></tr></tbody></table></article>
-  </div>
-  <p class="disclaimer">Interpretation: UEFA presents the reform as a way to create more varied fixtures and meaningful matches. Whether it improves competitive balance, fan experience or player welfare is a separate question that requires evidence over multiple seasons. [1][2]</p>
-</section>
-
-<section id="tactics">
-  <div class="section-head reveal"><div><div class="chapter">04 / THE TACTICS LAB</div><div class="eyebrow">Explore a team in motion</div><h2>Space is the real playing field.</h2></div><p>Formations are only starting positions. What matters is how a team creates passing lanes, presses the ball, protects space and reacts when possession changes.</p></div>
-  <div class="pitch-wrap reveal">
-    <div class="pitch" id="pitch" data-mode="positional" aria-label="Interactive illustrative football pitch">
-      <div class="centre-circle"></div><div class="box-left"></div><div class="box-right"></div>
-      <div class="pitch-lines"><svg viewBox="0 0 600 390" preserveAspectRatio="none" aria-hidden="true"><path d="M95 100 L190 155 L270 100 L310 190 L390 120 L465 175 L520 125"/><path d="M130 285 L220 240 L310 190 L380 275 L465 225 L500 270"/></svg></div>
-      <span class="player p1">6</span><span class="player p2">8</span><span class="player p3">10</span><span class="player p4">3</span><span class="player p5">9</span><span class="player p6 blue">4</span><span class="player p7 blue">5</span><span class="player p8 blue">7</span><span class="player p9 blue">11</span><span class="player p10">2</span><span class="player p11">1</span>
-      <span class="pitch-label">TACTICAL MAP / ILLUSTRATIVE, NOT MATCH TRACKING</span>
-    </div>
-    <div class="tactic-copy"><div class="eyebrow">Select a tactical idea</div><h3 id="tactic-title">Positional play</h3><p id="tactic-text">Players occupy complementary spaces to create passing options, stretch the opposition and open lanes through or around defensive lines. Possession is a tool for manipulating space, not an end in itself.</p><div class="switches" role="group" aria-label="Choose tactical illustration"><button class="switch selected" data-mode="positional">Positional play</button><button class="switch" data-mode="press">High press</button><button class="switch" data-mode="counter">Counter-press</button></div><p class="tactic-disclaimer">Illustrative interaction: player markers move to demonstrate a concept. This is not a measured tactical model of a real team.</p></div>
-  </div>
-  <div class="three-col" style="margin-top:22px">
-    <article class="card reveal"><span class="index">01 / BUILD-UP</span><h3>Creating superiority</h3><p>Teams try to create numerical, positional or qualitative advantages. A centre-back stepping into midfield may draw a presser and free a teammate; a wide player may pin a full-back to open an inside lane.</p></article>
-    <article class="card reveal"><span class="index">02 / PRESSING</span><h3>Defend by directing</h3><p>A high press is coordinated pressure on the opponent's build-up. Pressing triggers can include a backward pass, a poor first touch or a pass towards the touchline. The aim is often to limit options, not simply to sprint at the ball.</p></article>
-    <article class="card reveal"><span class="index">03 / TRANSITIONS</span><h3>The seconds after losing the ball</h3><p>Counter-pressing attacks the opponent's brief moment of disorganisation after possession changes. It can recover the ball close to goal, but if the first pressure is beaten, the pressing team may leave space behind it.</p></article>
-  </div>
-  <div class="two-col" style="margin-top:18px">
-    <article class="card reveal"><span class="index">04 / PERFORMANCE DATA</span><h3>What expected goals can — and cannot — say</h3><p>Expected goals (xG) estimate the probability that a shot becomes a goal based on characteristics such as location, angle and type of assist. xG helps describe chance quality across a match or season, but it is model-dependent and does not fully measure decision-making, defensive pressure or the difficulty of a particular finish.</p></article>
-    <article class="card reveal"><span class="index">05 / KNOCKOUT LOGIC</span><h3>Two legs change risk</h3><p>In a two-legged tie, teams manage an aggregate score across two matches. The leading team may prioritise compactness; the trailing team may take greater risks. Since the away-goals rule was abolished in UEFA club competitions from 2021/22, ties level on aggregate after the second leg go to extra time and, if necessary, penalties.</p></article>
-  </div>
-</section>
-
-<section id="money">
-  <div class="section-head reveal"><div><div class="chapter">05 / FOOTBALL ECONOMICS</div><div class="eyebrow">The value beyond the pitch</div><h2>Who benefits when the game grows?</h2></div><p>The competition connects sporting performance to commercial value. That connection creates investment opportunities, but also structural questions about distribution and competitive balance.</p></div>
-  <div class="economics reveal">
-    <article class="card">
-      <span class="index">THE REVENUE ECOSYSTEM</span><h3>Where value is created</h3>
-      <div class="economy-list">
-        <div class="economy-row"><strong>Media rights</strong><span>Broadcasters and platforms pay for access to matches and audiences.</span></div>
-        <div class="economy-row"><strong>Sponsorship</strong><span>Brands purchase visibility, association and access to global fan communities.</span></div>
-        <div class="economy-row"><strong>Matchday</strong><span>Clubs generate ticketing, hospitality and stadium-related income.</span></div>
-        <div class="economy-row"><strong>Sporting rewards</strong><span>UEFA distributions and performance payments affect participating clubs' income.</span></div>
-        <div class="economy-row"><strong>Secondary value</strong><span>Exposure can influence merchandise, commercial deals and player-market appeal.</span></div>
-      </div>
-    </article>
-    <article class="debate">
-      <div class="eyebrow">The central tension</div><h3>More spectacle can mean more inequality.</h3>
-      <p>Big clubs can convert global audiences into sponsorships, higher revenues and deeper squads. Those resources may improve future sporting performance, which can bring further revenue. Smaller clubs can benefit from qualification and visibility, but may find it harder to sustain that success.</p>
-      <div class="scale"><div><b>Potential benefits</b><span>More high-profile fixtures, global exposure, additional distributions and incentives to invest.</span></div><div><b>Potential costs</b><span>Fixture congestion, unequal resources, pressure on domestic leagues and player welfare concerns.</span></div></div>
-      <p style="margin-top:20px">A rigorous analysis should distinguish UEFA's stated objectives from measured outcomes. Revenue growth alone does not prove that competition has become fairer or more sustainable.</p>
-    </article>
-  </div>
-</section>
-
-<section id="moments">
-  <div class="section-head reveal"><div><div class="chapter">06 / THE MEMORY BANK</div><div class="eyebrow">Six nights that became stories</div><h2>More than a final score.</h2></div><p>Choose a match to explore how context, pressure and decisive moments helped turn a result into a lasting part of the competition's identity.</p></div>
-  <div class="match-tabs reveal" role="tablist" aria-label="Iconic match selector">
-    <button class="match-tab active" data-match="istanbul" role="tab" aria-selected="true">Istanbul · 2005</button>
-    <button class="match-tab" data-match="campnou" role="tab" aria-selected="false">Barcelona · 1999</button>
-    <button class="match-tab" data-match="munich" role="tab" aria-selected="false">Munich · 2012</button>
-    <button class="match-tab" data-match="cardiff" role="tab" aria-selected="false">Cardiff · 2017</button>
-    <button class="match-tab" data-match="madrid" role="tab" aria-selected="false">Madrid · 2019</button>
-    <button class="match-tab" data-match="istanbul23" role="tab" aria-selected="false">Istanbul · 2023</button>
-  </div>
-  <article class="match-feature reveal" id="match-feature" aria-live="polite">
-    <div class="match-photo" id="match-photo" style="background-image:linear-gradient(0deg,rgba(8,11,19,.12),rgba(8,11,19,.12)),url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=85')"></div>
-    <div class="match-copy"><div class="eyebrow" id="match-date">25 MAY 2005 · ATATÜRK OLYMPIC STADIUM</div><div class="score" id="match-score">3–3 <span style="font-size:16px">· pens 3–2</span></div><h3 id="match-title">Liverpool's impossible comeback</h3><p id="match-desc">AC Milan led 3–0 at half-time. Liverpool scored three times in a six-minute second-half spell, survived extra time and won the shootout. The match is remembered not just for the comeback, but for the way belief and momentum seemed to change the emotional landscape of the final.</p><p class="disclaimer" id="match-context">Research angle: momentum, substitutions, emotional pressure and the high variance of a single match.</p></div>
-  </article>
-</section>
-
-<section id="records">
-  <div class="section-head reveal"><div><div class="chapter">07 / THE RECORD BOOK</div><div class="eyebrow">Dominance, longevity, context</div><h2>Numbers tell a story — not the whole story.</h2></div><p>Club totals include the European Cup era. Player goals below refer to the Champions League era and are shown as official UEFA totals checked in October 2026.</p></div>
-  <div class="records-grid">
-    <article class="card reveal"><span class="index">CLUBS / MOST TITLES</span><h3>The historic leaders</h3>
-      <div class="record"><span class="rank">01</span><div><b>Real Madrid</b><small>Spain</small></div><strong>15</strong></div>
-      <div class="record"><span class="rank">02</span><div><b>AC Milan</b><small>Italy</small></div><strong>7</strong></div>
-      <div class="record"><span class="rank">03</span><div><b>Liverpool</b><small>England</small></div><strong>6</strong></div>
-      <div class="record"><span class="rank">04</span><div><b>Bayern Munich</b><small>Germany</small></div><strong>6</strong></div>
-      <div class="record"><span class="rank">05</span><div><b>Barcelona</b><small>Spain</small></div><strong>5</strong></div>
-    </article>
-    <article class="card reveal"><span class="index">PLAYERS / ALL-TIME GOALS</span><h3>Champions League top scorers</h3>
-      <div class="record"><span class="rank">01</span><div><b>Cristiano Ronaldo</b><small>Portugal</small></div><strong>141</strong></div>
-      <div class="record"><span class="rank">02</span><div><b>Lionel Messi</b><small>Argentina</small></div><strong>129</strong></div>
-      <div class="record"><span class="rank">03</span><div><b>Robert Lewandowski</b><small>Poland</small></div><strong>109</strong></div>
-      <div class="record"><span class="rank">04</span><div><b>Karim Benzema</b><small>France</small></div><strong>90</strong></div>
-      <div class="record"><span class="rank">05</span><div><b>Raúl</b><small>Spain</small></div><strong>71</strong></div>
-    </article>
-  </div>
-  <p class="disclaimer">Source: UEFA all-time history and statistics pages, checked October 2026. Records can differ when qualifying rounds or the pre-1992 European Cup are included; always check the definition attached to a statistic. [3][4]</p>
-  <div class="two-col" style="margin-top:18px">
-    <article class="card reveal"><span class="index">READING THE DATA</span><h3>Era matters</h3><p>Modern players often have more matches available in a season than players in the early European Cup. Total goals reward longevity and participation as well as finishing quality. Goals per appearance, finals, trophies and performance adjusted for opportunity answer different questions.</p></article>
-    <article class="card reveal"><span class="index">A RESEARCH CAUTION</span><h3>Correlation is not causation</h3><p>A club's spending and success may move together, but that does not by itself show that spending caused every win. Coaching, recruitment, injuries, opponent quality and random events also affect outcomes. Strong claims need comparable data across multiple seasons.</p></article>
-  </div>
-</section>
-
-<section id="conclusion">
-  <div class="conclusion reveal"><div class="eyebrow">08 / Final perspective</div><h2>The future of the game is also a question about what we value.</h2><p>The Champions League has continually adapted: from a champions-only knockout cup to a global competition shaped by broadcasting, commercial partnerships and increasingly sophisticated tactical preparation. Its appeal still depends on uncertainty — the possibility that a single goal, save or decision can overturn expectations.</p><p>The current league phase creates new sporting incentives and more varied fixtures, but its longer-term effects should be judged against evidence: competitive balance, fan experience, player workload and the relationship between European success and domestic football. The most useful question is not simply whether the competition is bigger, but whether its growth strengthens the game it represents.</p><a class="btn ghost" href="#sources">Explore the sources ↗</a></div>
-</section>
-
-<section id="sources">
-  <div class="section-head reveal"><div><div class="chapter">09 / SOURCES & METHOD</div><div class="eyebrow">Follow the evidence</div><h2>Sources, not just statements.</h2></div><p>Official UEFA material is used for rules and records. The tactical and economic sections are interpretive summaries and should be supplemented with academic research for formal assessment.</p></div>
-  <ol class="source-list reveal">
-    <li><strong>UEFA — New format explained.</strong> <a href="https://www.uefa.com/uefachampionsleague/news/0268-12157d69ce2d-9f011c70f6fa-1000--new-format-for-champions-league-post-2024-everything-you-need-to-/" target="_blank" rel="noopener noreferrer">36 clubs, eight league-phase matches and progression rules ↗</a></li>
-    <li><strong>UEFA — Final format and access list.</strong> <a href="https://www.uefa.com/news-media/news/0275-151c779310c3-b92bbf0d24f9-1000--uefa-approves-final-format-and-access-list-for-its-club-co/" target="_blank" rel="noopener noreferrer">The approved format and allocation of additional places ↗</a></li>
-    <li><strong>UEFA — History and all-time statistics.</strong> <a href="https://www.uefa.com/uefachampionsleague/history/" target="_blank" rel="noopener noreferrer">Winners, records and historical features ↗</a></li>
-    <li><strong>UEFA — Champions League final records.</strong> <a href="https://www.uefa.com/uefachampionsleague/news/0252-0e98c715bb79-dea77f56e2bd-1000--champions-league-final-records-and-statistics/" target="_blank" rel="noopener noreferrer">Final statistics and milestones ↗</a></li>
-    <li><strong>UEFA — Competition format.</strong> <a href="https://www.uefa.com/uefachampionsleague/competition-format/" target="_blank" rel="noopener noreferrer">Current competition structure ↗</a></li>
-    <li><strong>FIFA Training Centre — Technical resources.</strong> <a href="https://www.fifatrainingcentre.com/" target="_blank" rel="noopener noreferrer">Coaching, tactical analysis and performance resources ↗</a></li>
-  </ol>
-  <p class="disclaimer">Method note: Facts on this page are intended as an educational overview, not a substitute for the current competition regulations. Statistics are time-sensitive; the page should be checked before formal submission. The website is independent and is not affiliated with or endorsed by UEFA. Background photography is loaded from Unsplash; replace with licensed or self-created images if required by your course.</p>
-</section>
-</main>
-
-<footer class="footer"><div class="wrap footer-inner"><p>BEYOND THE STARS · An independent educational project about the UEFA Champions League.<br>Not affiliated with UEFA. All trademarks belong to their respective owners.</p><a class="backtop" href="#top">BACK TO TOP ↑</a></div></footer>
-
-<script>
-const menu = document.getElementById('menu');
-const navlinks = document.getElementById('navlinks');
-menu.addEventListener('click', () => {
-  const open = navlinks.classList.toggle('open');
-  menu.setAttribute('aria-expanded', String(open));
-});
-navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  navlinks.classList.remove('open'); menu.setAttribute('aria-expanded','false');
-}));
-
-// Reveal sections only when they enter the viewport.
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if ('IntersectionObserver' in window && !reduceMotion) {
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, {threshold: 0.12});
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-} else {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-}
-
-// Reading progress line.
-const progress = document.getElementById('progress');
-window.addEventListener('scroll', () => {
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  progress.style.width = (scrollable > 0 ? window.scrollY / scrollable * 100 : 0) + '%';
-}, {passive:true});
-
-// Navigation state.
-const navAnchors = [...document.querySelectorAll('.navlinks a')];
-const navSections = navAnchors.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-if ('IntersectionObserver' in window) {
-  const navObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      navAnchors.forEach(a => {
-        const active = a.hash === '#' + entry.target.id;
-        a.classList.toggle('active', active);
-        if (active) a.setAttribute('aria-current','location');
-        else a.removeAttribute('aria-current');
-      });
-    });
-  }, {rootMargin:'-25% 0px -65% 0px'});
-  navSections.forEach(s => navObserver.observe(s));
-}
-
-// Interactive tactical board.
-const tactics = {
-  positional: {
-    title:'Positional play',
-    text:'Players occupy complementary spaces to create passing options, stretch the opposition and open lanes through or around defensive lines. Possession is a tool for manipulating space, not an end in itself.'
-  },
-  press: {
-    title:'High pressing',
-    text:'The team moves forward as a unit to limit the opponent’s time and options. The aim is to force a predictable pass, win the ball high or make the opponent play long — while protecting space behind the press.'
-  },
-  counter: {
-    title:'Counter-pressing',
-    text:'Immediately after losing possession, nearby players apply pressure to stop the opponent escaping. If the first wave is bypassed, teammates must recover quickly to avoid leaving dangerous space.'
-  }
-};
-const pitch = document.getElementById('pitch');
-document.querySelectorAll('.switch').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.switch').forEach(b => b.classList.toggle('selected', b === btn));
-  pitch.dataset.mode = btn.dataset.mode;
-  document.getElementById('tactic-title').textContent = tactics[btn.dataset.mode].title;
-  document.getElementById('tactic-text').textContent = tactics[btn.dataset.mode].text;
-}));
-
-// Match explorer: text and image update together.
-const matches = {
-  istanbul: {
-    date:'25 MAY 2005 · ISTANBUL',
-    score:'3–3 <span style="font-size:16px">· pens 3–2</span>',
-    title:"Liverpool's impossible comeback",
-    desc:'AC Milan led 3–0 at half-time. Liverpool scored three times in a six-minute second-half spell, survived extra time and won the shootout. The final is remembered for momentum, belief and the extraordinary volatility of a single match.',
-    context:'Research angle: momentum, substitutions, emotional pressure and match variance.',
-    image:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=85'
-  },
-  campnou: {
-    date:'26 MAY 1999 · BARCELONA',
-    score:'2–1',
-    title:'Manchester United turn the final around',
-    desc:'Bayern Munich led for most of the match, but Manchester United scored twice in stoppage time. The ending is a reminder that late-game states can change rapidly: one set piece, one rebound and a few remaining minutes reshaped the entire story.',
-    context:'Research angle: game state, set pieces and late-match risk.',
-    image:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=85'
-  },
-  munich: {
-    date:'19 MAY 2012 · MUNICH',
-    score:'1–1 <span style="font-size:16px">· pens 3–4</span>',
-    title:'Chelsea survive Bayern’s home final',
-    desc:'Bayern scored late in normal time, but Didier Drogba equalised from a corner. Chelsea won the shootout after extra time. The final showed how set pieces, goalkeeper performance and the pressure of penalties can dominate a match with limited open-play chances.',
-    context:'Research angle: set-piece value, pressure and penalty shootouts.',
-    image:'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=85'
-  },
-  cardiff: {
-    date:'3 JUNE 2017 · CARDIFF',
-    score:'4–1',
-    title:'Real Madrid make history again',
-    desc:'Real Madrid beat Juventus and became the first team to retain the Champions League trophy in its modern era. Their second-half goals turned a competitive final into a clear result and extended a remarkable period of European success.',
-    context:'Research angle: tactical adjustments, depth and sustained elite performance.',
-    image:'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=85'
-  },
-  madrid: {
-    date:'1 JUNE 2019 · MADRID',
-    score:'0–2',
-    title:'Liverpool finish the job against Tottenham',
-    desc:'Liverpool scored early through a penalty and added a second late in the match. The final was less chaotic than Istanbul, but it demonstrated a different route to victory: an early lead, defensive organisation and the ability to manage the remaining game state.',
-    context:'Research angle: match control, defensive organisation and risk management.',
-    image:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=85'
-  },
-  istanbul23: {
-    date:'10 JUNE 2023 · ISTANBUL',
-    score:'0–1',
-    title:'Manchester City complete the treble',
-    desc:'Rodri scored the only goal against Inter. City controlled long stretches of the match, while Inter created dangerous moments of their own. The final illustrates how a team can dominate territory without producing a flood of goals — and how one decisive action can settle a final.',
-    context:'Research angle: positional control, chance creation and defensive resilience.',
-    image:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=85'
-  }
-};
-document.querySelectorAll('.match-tab').forEach(btn => btn.addEventListener('click', () => {
-  const m = matches[btn.dataset.match];
-  document.querySelectorAll('.match-tab').forEach(b => {
-    const active = b === btn;
-    b.classList.toggle('active', active);
-    b.setAttribute('aria-selected', String(active));
-  });
-  document.getElementById('match-date').textContent = m.date;
-  document.getElementById('match-score').innerHTML = m.score;
-  document.getElementById('match-title').textContent = m.title;
-  document.getElementById('match-desc').textContent = m.desc;
-  document.getElementById('match-context').textContent = m.context;
-  document.getElementById('match-photo').style.backgroundImage = `linear-gradient(0deg,rgba(8,11,19,.12),rgba(8,11,19,.12)),url("${m.image}")`;
-}));
-</script>
 </body>
 </html>
-'''
-
-path = Path("/mnt/data/index.html")
-path.write_text(html, encoding="utf-8")
-print(f"Created {path} ({path.stat().st_size:,} bytes)")
