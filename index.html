@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE CHAMPIONS // OVERLOAD MATRIX</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
+
+        :root {
+            --bg-color: #010204;
+            --neon-pink: #ff0055;
+            --neon-cyan: #00ffff;
+            --neon-gold: #ffcc00;
+            --neon-purple: #b000ff;
+            --neon-green: #00ff66;
+            --text-main: #ffffff;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(176, 0, 255, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(0, 255, 255, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.15) 0%, transparent 60%);
+        }
+
+        /* Matrix Rain Canvas Background */
+        canvas#matrix {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* Cyberpunk Grid Overlay */
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0,255,255,0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,255,255,0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation Matrix */
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(1, 2, 4, 0.95);
+            border-bottom: 3px solid var(--neon-pink);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(255, 0, 85, 0.5);
+        }
+
+        nav button, nav a.external-btn {
+            background: rgba(10, 15, 30, 0.9);
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 12px 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        nav button:hover, nav button.active {
+            background: var(--neon-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px var(--neon-cyan);
+            transform: translateY(-4px) scale(1.08);
+        }
+
+        nav a.external-btn {
+            border-color: var(--neon-gold);
+            color: var(--neon-gold);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+        }
+
+        nav a.external-btn:hover {
+            background: var(--neon-gold);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--neon-gold), 0 0 60px var(--neon-gold);
+            transform: translateY(-4px) scale(1.08);
+        }
+
+        /* Header Overload */
+        header {
+            text-align: center;
+            padding: 120px 20px 80px 20px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(1,2,4,0.95) 0%, rgba(10,15,30,0.9) 100%);
+            border-bottom: 4px solid var(--neon-cyan);
+            box-shadow: 0 0 80px rgba(0, 255, 255, 0.4);
+        }
+
+        .subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px var(--neon-green);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5.5rem;
+            margin: 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-main);
+            text-shadow: 5px 5px var(--neon-pink), -5px -5px var(--neon-cyan), 0 0 40px var(--neon-purple);
+            animation: crazyGlitch 1.5s infinite;
+        }
+
+        h1 span {
+            color: var(--neon-gold);
+            text-shadow: 5px 5px var(--neon-pink), -5px -5px var(--neon-green), 0 0 40px var(--neon-gold);
+        }
+
+        @keyframes crazyGlitch {
+            0% { transform: translate(0) skew(0deg); }
+            20% { transform: translate(-4px, 4px) skew(-2deg); }
+            40% { transform: translate(-4px, -4px) skew(2deg); }
+            60% { transform: translate(4px, 4px) skew(0deg); }
+            80% { transform: translate(4px, -4px) skew(-1deg); }
+            100% { transform: translate(0) skew(0deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--neon-gold);
+            border-left: 10px solid var(--neon-pink);
+            padding-left: 20px;
+            text-shadow: 0 0 20px rgba(255, 204, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), transparent);
+            margin-left: 20px;
+        }
+
+        /* View Switch System */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+            animation: matrixIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes matrixIn {
+            from { opacity: 0; transform: scale(0.95) translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        /* Holographic Grid & Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(10,15,30,0.95) 0%, rgba(20,30,60,0.95) 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(0,255,255,0.2);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 8px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-gold), var(--neon-green));
+            background-size: 300% 300%;
+            animation: gradientShift 4s infinite linear;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.04) rotateX(2deg);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.6s ease;
+            filter: contrast(1.2) saturate(1.3);
+        }
+
+        .card:hover .card-img-container img {
+            transform: scale(1.2) rotate(2deg);
+            filter: contrast(1.4) saturate(1.6) drop-shadow(0 0 10px var(--neon-cyan));
+        }
+
+        .card-content {
+            padding: 35px;
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 0;
+            color: var(--neon-cyan);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0,255,255,0.4);
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        /* Overload Matrix Audio Visualizer */
+        .matrix-box {
+            background: linear-gradient(135deg, rgba(10,15,30,0.98), rgba(30,10,50,0.98));
+            border: 4px solid var(--neon-purple);
+            border-radius: 15px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 60px;
+            box-shadow: 0 0 60px rgba(176, 0, 255, 0.6), inset 0 0 30px rgba(176, 0, 255, 0.3);
+            position: relative;
+        }
+
+        .matrix-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-pink);
+            font-size: 2.3rem;
+            margin-top: 0;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .waves {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            height: 90px;
+            margin-top: 35px;
+        }
+
+        .wave-bar {
+            width: 10px;
+            background: var(--neon-cyan);
+            animation: pulseWave 0.8s infinite ease-in-out alternate;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            border-radius: 5px;
+        }
+
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; background: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; background: var(--neon-gold); box-shadow: 0 0 20px var(--neon-gold); }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; background: var(--neon-green); box-shadow: 0 0 20px var(--neon-green); }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; background: var(--neon-purple); box-shadow: 0 0 20px var(--neon-purple); }
+        .wave-bar:nth-child(6) { animation-delay: 0.5s; background: var(--neon-cyan); }
+        .wave-bar:nth-child(7) { animation-delay: 0.6s; background: var(--neon-pink); }
+
+        @keyframes pulseWave {
+            0% { height: 20px; }
+            100% { height: 95px; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px;
+            color: #64748b;
+            font-size: 1.2rem;
+            border-top: 3px solid rgba(0,255,255,0.3);
+            background-color: #010204;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+    <div class="cyber-grid"></div>
+
+    <!-- Navigation Overload Matrix -->
+    <nav>
+        <button class="active" onclick="switchView('home')">// 01. Core Matrix</button>
+        <button onclick="switchView('matches')">// 02. Epic Clashes</button>
+        <button onclick="switchView('dynasty')">// 03. Ultimate Records</button>
+        <a class="external-btn" href="https://www.uefa.com/uefachampionsleague/" target="_blank">UEFA Portal ↗</a>
+    </nav>
+
+    <header>
+        <p class="subtitle">&gt;&gt; SYSTEM OVERLOAD: PEAK EUROPEAN GLORY ACTIVE</p>
+        <h1>THE <span>CHAMPIONS</span></h1>
+    </header>
+
+    <div class="container">
+
+        <!-- VIEW 1: HOME -->
+        <div id="home" class="view-section active">
+            <h2 class="section-title">System Overview // Core Arena</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80" alt="Stadium Atmosphere">
+                    </div>
+                    <div class="card-content">
+                        <h3>University Project Core</h3>
+                        <p>An explosive deep-dive into the historical architecture, cultural dominance, and psychological warfare of the UEFA Champions League.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="Football Action">
+                    </div>
+                    <div class="card-content">
+                        <h3>Maximum Cyber Aesthetics</h3>
+                        <p>Built with high-voltage neon matrices, real-time code rain, dynamic holographic cards, and infinite visual overflow capacity.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="matrix-box">
+                <h3>AUDIO FREQUENCY: THE SACRED ANTHEM</h3>
+                <p style="color: #cbd5e1; font-size: 1.2rem; letter-spacing: 2px; margin-top: 15px;">"Die Meister, Die Besten, Les Grandes Équipes, The Champions!"</p>
+                <div class="waves">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: MATCHES -->
+        <div id="matches" class="view-section">
+            <h2 class="section-title">Subpage // Legendary Clashes</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80" alt="Istanbul Comeback">
+                    </div>
+                    <div class="card-content">
+                        <h3>Istanbul 2005</h3>
+                        <p>The ultimate resurrection: Liverpool obliterates a 0-3 half-time deficit against AC Milan, sealing immortality in a penalty shootout thriller.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=800&q=80" alt="La Decima Real Madrid">
+                    </div>
+                    <div class="card-content">
+                        <h3>La Décima (2014)</h3>
+                        <p>92:48! Sergio Ramos defying physics and time in Lisbon to extend Real Madrid's eternal supremacy and secure the elusive tenth crown.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80" alt="Camp Nou Chaos">
+                    </div>
+                    <div class="card-content">
+                        <h3>The Remontada (2017)</h3>
+                        <p>Absolute cosmic chaos at Camp Nou: Barcelona eradicates a 4-0 first-leg deficit against PSG with a stunning 6-1 masterclass.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: DYNASTY & RECORDS -->
+        <div id="dynasty" class="view-section">
+            <h2 class="section-title">Subpage // Dynasty & Records</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1556056504-5c7696c4c28d?auto=format&fit=crop&w=800&q=80" alt="Trophy Glory">
+                    </div>
+                    <div class="card-content">
+                        <h3>The Galactic Kings</h3>
+                        <p>Real Madrid rules the cosmos with unmatched authority, holding an insurmountable lead in total tournament trophies.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="Music and Anthem">
+                    </div>
+                    <div class="card-content">
+                        <h3>The Sacred Anthem</h3>
+                        <p>Crafted by Tony Britten using motifs from George Frideric Handel's coronation anthems—guaranteed chills before every kickoff.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 UEFA CL History Project // University Overload Edition. Maximum Matrix.</p>
+    </footer>
+
+    <script>
+        // Matrix Rain Canvas Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const chars = '01THECHAMPIONSUEFAFOOTBALLGLORYMATRIX9876543210ABCDEF';
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(1, 2, 4, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ffff';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 40);
+
+        // View Switching Logic
+        function switchView(viewId) {
+            const views = document.querySelectorAll('.view-section');
+            views.forEach(v => v.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(viewId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
