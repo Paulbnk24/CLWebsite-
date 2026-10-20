@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The UEFA Champions League – Ultimate Academic Research Archive</title>
+    <title>The UEFA Champions League – Advanced Academic Research Archive</title>
     <style>
         :root {
-            --bg-deep: #03050b;
-            --bg-card: #0b1120;
-            --bg-card-hover: #131c31;
+            --bg-deep: #02040a;
+            --bg-card: #090e1a;
+            --bg-card-hover: #10182c;
             --accent-gold: #d4af37;
-            --accent-gold-glow: rgba(212, 175, 55, 0.25);
+            --accent-gold-glow: rgba(212, 175, 55, 0.3);
             --accent-blue: #0284c7;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -28,13 +28,12 @@
             overflow-x: hidden;
         }
 
-        /* Immersive Top Bar Navigation */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 18px 40px;
-            background: rgba(3, 5, 11, 0.9);
+            background: rgba(2, 4, 10, 0.95);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
@@ -64,7 +63,7 @@
 
         .nav-links {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -73,15 +72,13 @@
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
         }
 
         nav button:hover, nav button.active {
@@ -102,13 +99,11 @@
             box-shadow: 0 0 15px rgba(2, 132, 199, 0.2);
         }
 
-        /* Hero Section */
         header {
             text-align: center;
             padding: 110px 20px 70px 20px;
-            background: radial-gradient(circle at 50% 0%, rgba(13, 27, 60, 0.6) 0%, rgba(3, 5, 11, 1) 70%);
+            background: radial-gradient(circle at 50% 0%, rgba(13, 27, 60, 0.7) 0%, rgba(2, 4, 10, 1) 70%);
             border-bottom: 1px solid var(--border-color);
-            position: relative;
         }
 
         .subtitle {
@@ -121,7 +116,7 @@
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 3.8rem;
             margin: 0;
             font-weight: 900;
             letter-spacing: -1.5px;
@@ -136,10 +131,9 @@
             max-width: 850px;
             margin: 25px auto 0 auto;
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
         }
 
-        /* Fixed Audio Player Bar */
         .audio-player-container {
             max-width: 580px;
             margin: 45px auto 0 auto;
@@ -178,7 +172,6 @@
             accent-color: var(--accent-gold);
         }
 
-        /* Main Container & Views */
         .container {
             max-width: 1200px;
             margin: 70px auto;
@@ -208,11 +201,10 @@
 
         .section-intro {
             color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-bottom: 50px;
+            font-size: 1.15rem;
+            margin-bottom: 45px;
         }
 
-        /* Content Blocks & Grids */
         .content-block {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -232,25 +224,25 @@
         .content-block h3 {
             margin-top: 0;
             color: var(--accent-gold);
-            font-size: 1.8rem;
-            margin-bottom: 22px;
+            font-size: 1.7rem;
+            margin-bottom: 20px;
         }
 
         .content-block p {
             color: var(--text-muted);
-            margin-bottom: 22px;
-            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
         }
 
         .content-block ul {
             color: var(--text-muted);
             margin: 0;
-            padding-left: 22px;
-            font-size: 1.1rem;
+            padding-left: 20px;
+            font-size: 1.05rem;
         }
 
         .content-block li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .content-img {
@@ -258,7 +250,7 @@
             height: 380px;
             object-fit: cover;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border: 1px solid var(--border-color);
         }
 
@@ -305,7 +297,7 @@
             margin-top: 0;
             color: var(--accent-gold);
             font-size: 1.5rem;
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
 
         .card p {
@@ -314,7 +306,6 @@
             font-size: 1.05rem;
         }
 
-        /* Timeline Layout */
         .timeline {
             position: relative;
             padding-left: 35px;
@@ -375,7 +366,6 @@
             font-size: 1.6rem;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 50px;
@@ -383,13 +373,12 @@
             font-size: 0.95rem;
             border-top: 1px solid var(--border-color);
             margin-top: 100px;
-            background: rgba(3, 5, 11, 0.5);
+            background: rgba(2, 4, 10, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- Professional Navigation -->
     <nav>
         <div class="nav-brand">UCL Academic Archive</div>
         <div class="nav-links">
@@ -401,13 +390,11 @@
         </div>
     </nav>
 
-    <!-- Hero Header -->
     <header>
         <p class="subtitle">Academic Research Webpage // Faculty of Business & Social Sciences</p>
         <h1>The UEFA Champions <span>League</span></h1>
         <p class="hero-desc">An exhaustive academic examination of Europe's preeminent club football ecosystem—dissecting institutional transformations, multi-billion-euro media markets, and paradigm-shifting tactical revolutions.</p>
         
-        <!-- Fixed Official Anthem Audio Player -->
         <div class="audio-player-container">
             <div class="audio-info">
                 <span>Matchday Audio Experience</span>
@@ -422,7 +409,7 @@
 
     <div class="container">
 
-        <!-- VIEW 1: HISTORY & GENESIS (TIMELINE) -->
+        <!-- VIEW 1 -->
         <div id="home" class="view-section active">
             <h2 class="section-title">Historical Genesis & Institutionalization</h2>
             <p class="section-intro">A deep chronological inquiry tracing how a post-war journalistic vision evolved into the most commercially lucrative and culturally revered annual sporting competition on earth.</p>
@@ -454,7 +441,7 @@
             </div>
         </div>
 
-        <!-- VIEW 2: ECONOMICS & MEDIA -->
+        <!-- VIEW 2 -->
         <div id="economics" class="view-section">
             <h2 class="section-title">Economics, Governance & Media Architecture</h2>
             <p class="section-intro">An institutional evaluation of centralized broadcasting rights, corporate revenue distribution mechanisms, and the structural transition toward the modern Swiss-Model format.</p>
@@ -478,7 +465,7 @@
             </div>
         </div>
 
-        <!-- VIEW 3: TACTICAL EVOLUTION -->
+        <!-- VIEW 3 -->
         <div id="tactics" class="view-section">
             <h2 class="section-title">Tactical Evolution & Modern Play Paradigms</h2>
             <p class="section-intro">An analysis of how strategic paradigms transitioned from defensive conservatism and zonal rigidity to high-intensity gegenpressing, positional play, and data-driven athletic profiling.</p>
@@ -505,7 +492,7 @@
             </div>
         </div>
 
-        <!-- VIEW 4: DYNASTIES & RECORDS -->
+        <!-- VIEW 4 -->
         <div id="dynasty" class="view-section">
             <h2 class="section-title">Dynasties, Records & Statistical Legends</h2>
             <p class="section-intro">An empirical examination of historical club dominance, individual athletic milestones, and the longitudinal datasets defining elite excellence in European competition.</p>
@@ -540,19 +527,15 @@
 
     <script>
         function switchView(viewId, buttonElement) {
-            // Hide all views smoothly
             const views = document.querySelectorAll('.view-section');
             views.forEach(v => v.classList.remove('active'));
 
-            // Remove active style from buttons
             const buttons = document.querySelectorAll('nav button');
             buttons.forEach(b => b.classList.remove('active'));
 
-            // Activate selected view and button
             document.getElementById(viewId).classList.add('active');
             buttonElement.classList.add('active');
         }
     </script>
-
 </body>
 </html>
